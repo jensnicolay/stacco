@@ -1,0 +1,13 @@
+(
+
+    (
+        (
+          capture (a b cons) send
+        ) (yeah) def
+        capture clone
+    ) (make-actor1) def
+
+    make-actor1 (A1) def
+    capture (cons) slookup println
+    A1 (@A1 yeah) send
+) ; "examples/send2.stc" load apply

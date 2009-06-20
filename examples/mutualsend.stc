@@ -1,0 +1,21 @@
+(
+
+    (
+        '((Other Nr) def
+            ("actor 1 received " @Nr "\n") (print) iterl
+            Other (@Nr yeah2) send
+        ) (yeah) def
+        capture clone
+    ) (make-actor1) def
+
+    (
+        '((Nrke) def
+            ("actor 2 received " @Nrke "\n") (print) iterl
+        ) (yeah2) def
+        capture clone
+    ) (make-actor2) def
+
+    make-actor1 (A1) def
+    make-actor2 (A2) def
+    A1 (@A2 1 yeah) send
+) ; "examples/mutualsend.stc" load apply
