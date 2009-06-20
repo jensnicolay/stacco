@@ -1,0 +1,31 @@
+(
+    (
+        ($ (Customer Nr) def
+            Nr zero?
+                (@Customer (1 result) send)
+                (capture (@Customer @Nr @make-multiplier @Nr 1 - fac) send) if
+        ) (fac) def
+        new
+    ) (make-factorial-computer) def
+    
+    ((Customer Nr1) def
+        ($ (Nr2) def
+			;(@Nr1 " * " @Nr2 "\n") (print) iterl
+            Customer (@Nr1 @Nr2 * result) send
+        ) (result) def
+        new
+    ) (make-multiplier) def
+    
+    ((FactComputer) def
+        ($ (Nr) def
+            FactComputer (@capture @Nr fac) send
+        ) (fac) def
+        ($ (Nr) def
+            ("result: " @Nr "\n") (print) iterl
+        ) (result) def
+        new
+    ) (make-factorial) def
+    
+    make-factorial-computer (Fact) def
+    Fact make-factorial (5 fac) send
+) ; "examples/factorial.stc" load apply 

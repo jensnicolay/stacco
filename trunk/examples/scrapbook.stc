@@ -1,0 +1,4 @@
+make-account (Acc) def
+
+((X) def X 0 = (1) (X X 1 - fac *) if) (fac) def
+

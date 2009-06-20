@@ -1,0 +1,26 @@
+; stacco list
+(
+    (() cons)                                                       (quo) def
+    (first)                                                         (unq) def
+    ((L N) def L 0 ((rest) dip inc) (dup N = not) while pop first)  (ref) def
+    ($ (F) def (uncons (@F apply) dip) (dup empty? not) while pop)  (iterl) def
+	(() swap (swap cons) iterl)                                     (reverse) def
+    ((F) def reverse F iterl)                                       (iterr) def
+    ((N) def () (cons) N repeat)                                    (list) def
+    (() iterl)                                                      (unlist) def
+    (0 swap (pop inc) iterl)                                        (size) def
+    ($ (F) def () swap (swap @F dip cons) iterr)                    (map) def
+    (swap (swap cons) iterr)                                        (append) def
+    ($ (F) def () swap (swap (dup @F apply) dip swap
+        (cons) ((pop) dip) if) iterr)                               (filter) def
+    ($ (L El) def #f L (@El unq = or) iterl)                        (member?) def
+    
+    ($ ((Ks) def (uncons pop @Ks = not) filter) iterl)                       (aremove) def
+    ($ (K) def (uncons pop @K unq =) filter dup empty? (pop #f) (first) if)  (alookup) def
+    ($ (Ks) def (uncons pop quo @Ks swap member?) filter)                    (akeep) def
+    ($ (Ks K V) def Ks K alookup dup
+        (quo @V append (set-cdr!) native apply) () if pop)                   (aset!) def
+    
+    "stacco-list" println    
+	capture
+)

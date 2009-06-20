@@ -1,0 +1,15 @@
+; stacco bootstrap
+; this file is always loaded at startup
+
+(
+    ("Stacco v1.0\n") (display) native apply (Void) def 
+    
+    "stacco-lang.stc" load apply become pop
+    "stacco-list.stc" load apply become pop
+    "stacco-state.stc" load apply become pop
+  
+    "stacco-math.stc" load apply become pop
+    ;"stacco-test.stc" load apply become pop
+
+    capture
+)
