@@ -1,0 +1,21 @@
+; stacco module
+(
+    ($ (V I) def (@V @I) (vector-ref) native apply) (vref) def
+    ($ (V I E) def (@V @I @E) (vector-set!) native apply pop) (vset!) def
+    ($ (L) def (@L) (make-vector) native apply) (vmake) def
+    
+    (0 vref) (sstack) def
+    (1 vref) (senv) def
+	(((2 vmake dup dup 0) dip vset! 1) dip vset!) (sstate) def
+   
+    (capture clone dup dup sstack rest (0) dip vset!) (new) def
+    
+    ((senv) dip alookup dup (uncons swap pop) () if) (slookup) def ;fails for primitives
+    (((senv) dip) dip aset!) (sset!) def
+ 
+    ($ ((@capture) dip) dip swap quo sset!) (def!) def
+    (capture swap slookup) (localscope) def
+    
+    "stacco-state" println
+    capture
+)

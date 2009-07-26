@@ -1,0 +1,12 @@
+
+(
+    (
+        ((Amount) def Amount + "deposited " print Amount println) (deposit) def
+        ((Amount) def dup Amount <
+            ("insufficient funds" println)
+            (Amount - "withdrew " print Amount println) if) (withdraw) def
+        new
+    ) (make-account) def
+    
+    new
+) ; "examples/account.stc" load apply become

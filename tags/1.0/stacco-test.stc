@@ -1,0 +1,131 @@
+(    
+    ("stacco-test.stc" load apply pop) (runtests) def
+    capture (Public) def
+    
+    0 (Ok) def
+    0 (Error) def
+    
+    ((=) dip swap
+        (Ok inc (Ok) def! print " " print)
+        (Error inc (Error) def! "ERROR: " print println) if
+    ) (assert=) def
+
+    ; todo: capture clean environment
+    
+    "Running tests: " print
+ 
+    clear 1 2 +
+    3 "simple1" assert=
+    
+    clear 1 (A) def A
+    1 "simple2" assert=
+    
+    clear (dup *) (f3) def 5 f3
+    25 "simple3" assert=
+    
+    clear (1 2 3) reverse
+    (3 2 1) "reverse" assert=
+    
+    clear (1 2 3) (4 5 6) append
+    (1 2 3 4 5 6) "append" assert=
+    
+    clear (5 (F P) def F apply) (f4a) def (66 (P) def (P @P @@P @@@P) f4a) (f4b) def
+    f4b 4 list (5 5 66 @@P) "inlineeval" assert=
+    
+    clear
+    (
+        ((Amount) def Amount +) (deposit) def
+        ((Amount) def dup Amount <
+            ()
+            (Amount -) if) (withdraw) def
+        new (pop) dip
+    ) (f5) def
+    100 f5 (F5a) def 200 f5 (F5b) def
+    F5a (10 deposit) send F5a sstack (110) "send1" assert=
+    F5b (20 deposit) send F5b sstack (220) "send2" assert=
+    F5a (999 withdraw) send F5a sstack (110) "send3" assert=
+    F5b (30 withdraw) send F5b sstack (190) "send4" assert=
+
+    clear
+    (
+        ((Other) def
+          capture (a b cons) send
+        ) (yeah) def
+        new
+    ) (make-obj6) def
+    make-obj6 (Obj6) def
+    Obj6 (hehe yeah) send
+    Obj6 sstack first (a . b) "send6" assert=
+                
+    clear
+    (
+        ((Other) def
+          Other (yeah2) send
+        ) (yeah) def
+        new
+    ) (make-obj7) def
+    make-obj7 (Obj7) def
+    (
+        (a b cons) (yeah2) def
+        new
+    ) (make-obj7b) def
+    make-obj7b (Obj7b) def
+    Obj7 (@Obj7b yeah) send
+    Obj7b sstack first (a . b) "send7" assert=
+                
+    clear
+    (
+        ($ (Other) def
+          Other (@capture yeah2) send
+        ) (yeah) def
+        (a b cons) (yeah3) def
+        new
+    ) (make-obj8) def
+    make-obj8 (Obj8) def
+    (
+        ($ (Otherke) def
+        Otherke (yeah3) send
+        ) (yeah2) def
+        new
+    ) (make-obj8b) def
+    make-obj8b (Obj8b) def
+    Obj8 (@Obj8b yeah) send
+    Obj8 sstack first (a . b) "send8" assert=
+
+    clear
+    (
+        (
+            ($ (Customer Nr) def
+                Nr zero?
+                    (@Customer (1 result) send)
+                    (capture (@Customer @Nr @make-multiplier @Nr 1 - fac) send) if
+            ) (fac) def
+            new
+        ) (make-factorial-computer) def
+        
+        ((Customer Nr1) def
+            ($ (Nr2) def
+                Customer (@Nr1 @Nr2 * result) send
+            ) (result) def
+            new
+        ) (make-multiplier) def
+        
+        ((FactComputer) def
+            ($ (Nr) def
+                FactComputer (@capture @Nr fac) send
+            ) (fac) def
+            () (result) def
+            new
+        ) (make-factorial) def
+        
+        make-factorial-computer (FactComputer) def
+        FactComputer make-factorial (Fact) def
+        Fact (5 fac) send
+        Fact sstack (120) "factorial" assert= 
+    ) apply
+    
+                
+    (" " @Ok " ok, " @Error " fail\n") (print) iterl
+    
+    Public        
+)

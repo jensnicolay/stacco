@@ -1,0 +1,11 @@
+; stacco math
+(
+    (0 =)			                        (zero?) def
+    (2 % 0 =)		                        (even?) def
+    (even? not)		                        (odd?) def
+    (dup 0 = (pop 1) (dup dec fac *) if)    (fac) def
+    ((A B) def A B > (A) (B) if)            (max) def
+    
+    "stacco-math" println    
+	capture
+)

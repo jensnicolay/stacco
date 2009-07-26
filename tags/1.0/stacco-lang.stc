@@ -1,0 +1,45 @@
+; stacco lang
+(
+	; stack
+	((A) def)	 			                (pop) def
+	((A B) def B A) 		                (swap) def
+	((A) def A A)			                (dup) def
+	((A F) def F apply A) 	                (dip) def
+	
+    ($ (A L) def (@A @L) (cons) native apply) (cons) def
+    (() cons (car) native apply)            (first) def
+    (() cons (cdr) native apply)            (rest) def
+    (() cons (pair?) native apply)          (pair?) def
+    (dup (first) dip rest)                  (uncons) def
+    (() =)                                  (empty?) def
+	
+	; basic operators
+	(() cons cons (+) native apply)	        (+) def
+	(() cons cons (*) native apply)	        (*) def
+    (() cons cons (-) native apply)         (-) def
+    (() cons cons (/) native apply)         (/) def
+    (() cons cons (remainder) native apply) (%) def
+    (() cons cons (equal?) native apply)    (=) def
+    (() cons cons (>) native apply)         (>) def
+    (() cons cons (<) native apply)         (<) def
+    (() cons cons (>=) native apply)        (>=) def
+    (() cons cons (<=) native apply)        (<=) def
+    (() cons cons (eq?) native apply)       (eq?) def
+    
+	(1 +)   (inc) def
+	(1 -)   (dec) def
+    
+    ; logic
+    (() cons (not) native apply)            (not) def
+	
+	; iteration
+	($ (F N) def N (@F dip dec) (dup 0 >) while pop) (repeat) def
+    
+    ; printing
+    (() cons (display) native apply pop)        (print) def
+    (() (newline) native apply pop)             (ln) def 
+    (print ln)                                  (println) def
+    
+    "stacco-lang" println
+	capture
+)
